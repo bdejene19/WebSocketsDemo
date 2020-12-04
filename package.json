@@ -1,0 +1,23 @@
+{
+  "name": "WebSockets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "config": 
+    {
+      "outputCapture": "std"
+    }
+  ,
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "Bemnet",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "websocket": "^1.0.32"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}

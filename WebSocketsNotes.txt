@@ -1,0 +1,47 @@
+Houssain Youtube Tutorial Notes: (still need to finish video)
+
+Web Sockets => a bidirectional communication protocol
+- what will be discussed:
+    - HTTP, WebSockets (WS), WS Handshake, WS use cases, WS code examples, WS pros and cons
+
+
+
+1) HTTP 
+- HTTP 1.0 (first technology invented) => built on a TCP protocol (a request response system => client ma kes always makes request, then server will send response)
+    - server requires a request => however, TCP is expensive, requires memory, and descriptors to be saved
+    - e.g. after a get request of a html page => your connection will close after the request
+- what if we wanted to open a bunch of images as well on the page after ? => cannot open and close all of these independently => does not scale 
+- HTTP 1.1: what websockets were built on => leave TTC connection open and do not close the connection until you are entirely done 
+    - this works entirely fine => however there are use cases that requires the server to send you information that is not requested by the client (where websockets come in)
+
+2) WebSockets - uses HTTP 1.1 => uses persistent PTC connection as a vehicle to send information from the client to the server, and server to the client
+- KEY: now it is no longer stateless, is now stateful => since both the server and client are aware of one another 
+- Note: HTTP is stateless
+- how websockets work: 
+    - send an http request => do a websocket handshake (is still an http request with a 'salt and pepper')
+    - the server will get the websocket action that will either do the action or not 
+- this websocket is a binary protocol that is detached from HTTP => is like the wild west => anyone can send information to anyone
+    - this is because they both have access to the API of the underlying TCP connection
+        - based on this interaction => a lot of use cases were born 
+
+
+3) WebSockets Handshake (ws:// or wwss://)
+- you make a normal http 1.1 get request 
+- there is an upgrade hitter (what is being in sent) in the middle (is very powerful) before being sent to the server
+    - the server consumes the request -> if server knows the request is trying to be upgraded it will: 
+        - switch protocls (101) -> where you then enter this binary protocol
+- websocket has key and protocols => does seeding and hashing and send back a new websocket accept (takes value to verify that THAT server sent you that resonse)
+- you can build you own websockets that does this for you, but easier to use libraries
+
+
+4) WebSockets Use cases
+- Chatting: someone can send you a message without having to check for it (e.g. constantly sending a get request) 
+- Live Feed: e.g. when ever there is a blog post let me know (don't want to have to request when new blog post is released)
+- Multiplayer Gaming: multiple player send input and the second client can handle multiple connections
+    - this gets tricky when multiple clients connection to one WS server => the websocket server would have to maintain multiple TCP connections with each of those guys (making it more stateful => i.e. cannot easily horizontally scale your project)
+        - this does not mean that you cannot horizontally scale
+        - this just means that you need to write more code to make it more STATELESS 
+
+- Showing Client Progress/Logging => showing progress of an uploaded video or image (you would want the server to let you know the progress of the uplaod without requesting it)
+
+go to code for websocket example
